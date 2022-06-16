@@ -1,24 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Admin, Resource, ListGuesser } from 'react-admin';
+import jsonServerProvider from 'ra-data-json-server';
+import { PostEdit } from './Component/posts';
+import { UserList } from './Component/users';
+import { ShowList } from './Component/ShowList';
+import { CommentList } from './Component/Comments';
+import { PageLayout } from './Component/Layout/PageLayout';
 
+
+const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Admin dataProvider={dataProvider} layout= {PageLayout} >
+        <Resource name='users'  list={UserList} show={ShowList}/>
+        <Resource name='comments' edit={PostEdit} list={CommentList}/>
+        <Resource name='posts' edit={PostEdit} list={ListGuesser}  />
+      </Admin>
     </div>
   );
 }
